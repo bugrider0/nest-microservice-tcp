@@ -1,12 +1,11 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { microservice } from './microservice';
 // import { setupSwagger } from './swagger';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await microservice();
 
   // setupSwagger(app);
 
-  await app.listen(3000);
+  await app.listen();
 }
 bootstrap();

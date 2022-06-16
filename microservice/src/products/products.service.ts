@@ -17,10 +17,14 @@ export class ProductsService {
         name: createProductDto.name,
       },
     });
-    if (product) throw new ConflictException('This product is already Exists');
+    if (product) {
+      return new ConflictException('This product is already Exists');
+    }
 
     return await this.prisma.product.create({
-      data: createProductDto,
+      data: {
+        name: createProductDto.name,
+      },
     });
   }
 
@@ -29,6 +33,15 @@ export class ProductsService {
   }
 
   async findOne(id: number) {
+    const product = await this.prisma.product.findUnique({
+      where: {
+        id,
+      },
+    });
+    if (!product) {
+      return new NotFoundException('This product is not found');
+    }
+
     return await this.prisma.product.findUnique({
       where: {
         id,
@@ -42,7 +55,9 @@ export class ProductsService {
         id,
       },
     });
-    if (!product) throw new NotFoundException('This product is not found');
+    if (!product) {
+      return new NotFoundException('This product is not found');
+    }
 
     return await this.prisma.product.update({
       where: {
@@ -60,7 +75,9 @@ export class ProductsService {
         id,
       },
     });
-    if (!product) throw new NotFoundException('This product is not found');
+    if (!product) {
+      return new NotFoundException('This product is not found');
+    }
 
     return await this.prisma.product.delete({
       where: {
