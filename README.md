@@ -9,12 +9,18 @@ cd ./microservice && cp .env.dev .env
 docker-compose up -d
 ```
 ```
+npm t
+```
+```
 npm run start:dev
 ```
 
 ## Client
 ```
 cd ./client
+```
+```
+npm t
 ```
 ```
 npm run start:dev
